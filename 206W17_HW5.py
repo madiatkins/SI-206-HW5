@@ -35,6 +35,25 @@ try:
 except:
 	cache_dict = {}
 
+def getWithCaching(phrase):
+	api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
+	public_tweets = api.search(q=phrase)
+	twitter_phrase = "twitter_"+str(phrase)
+
+	if twitter_phrase in cache_dict:
+		print('using cache')
+		response_text = cache_dict[twitter_phrase]
+	else:
+		print('fetching')
+		cache_dict[twitter_phrase] = public_tweets
+		response_text = public_tweets
+
+		cache_file = open(cached, 'w')
+		cache_file.write(json.dumps(cache_dict))
+		cache_file.close()
+
+	response_dictionary = response_text
+	return response_dictionary
 
 
 
