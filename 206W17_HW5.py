@@ -55,6 +55,28 @@ def getWithCaching(phrase):
 	response_dictionary = response_text
 	return response_dictionary
 
+user_input = input("Enter phrase you wish to search for: ")
+
+data = getWithCaching(user_input)
+
+
+text_twitter = []
+created_twitter = []
+
+tweeter = data["statuses"]
+for tweet in tweeter:
+    text_twitter.append("TEXT: " + tweet["text"])
+    
+    created_twitter.append("CREATED AT: " + tweet["created_at"])
+    #print("\n")
+
+input_dict = {text_twitter[n]: created_twitter[n] for n in range(3)}
+
+for key in input_dict:
+	print(key.encode("utf-8"))
+	print(input_dict[key])
+	print("\n")
+
 
 
 ## Write code that uses the tweepy library to search for tweets with a phrase of the user's choice (should use the Python input function), and prints out the Tweet text and the created_at value (note that this will be in GMT time) of the first THREE tweets with at least 1 blank line in between each of them, e.g.
